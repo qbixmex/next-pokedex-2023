@@ -1,41 +1,36 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
-import { useRouter } from 'next/router';
 import { Layout } from '../../components/layouts/Layout';
 import { Pokemon } from '../../interfaces';
-// import { pokeApi } from '../../api';
+import { pokeApi } from '../../api';
+import { capitalize } from '../../utils';
 
 type Props = { pokemon: Pokemon };
 
-const PokemonPage: NextPage<Props> = ({ pokemon: { id, name } }) => {
-  const router = useRouter();
+const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
   return (
-    <Layout title='Pokemon # Page'>
-      <p>Pokemon # { `${id} ${name}` }</p>
+    <Layout title={`${ capitalize(pokemon.name) } Pokemon`}>
+      <h1>{ capitalize(pokemon.name) }</h1>
     </Layout>
   );
 };
 
-const getStaticPaths: GetStaticPaths = async (context) => {
+const getStaticPaths: GetStaticPaths = async () => {
+  const pokemons151 = [...Array(151)].map((_, index) => `${index + 1}`);
+
   return {
-    paths: [
-      { params: { id: '1' } },
-      { params: { id: '2' } },
-      { params: { id: '3' } },
-    ],
+    paths: pokemons151.map(id => ({ params: { id } })),
     fallback: false, // false or 'blocking'
   };
 };
 
-const getStaticProps: GetStaticProps = async (context) => {
-  // const { data } = await pokeApi.get<Pokemon>('/pokemon?name=pikachu');
+const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { id } = params as { id: string };
+  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${ id }`);
 
   return {
     props: {
-      pokemon: {
-        id: '1',
-        name: 'Bulbasaur',
-      },
+      pokemon: data,
     }
   };
 };

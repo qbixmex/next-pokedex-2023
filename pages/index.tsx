@@ -9,7 +9,7 @@ const HomePage: FC = () => {
         <title>Pokedex App</title>
       </Head>
       <main>
-        <h1 className="title gray-dark">Pokedex App</h1>
+        <h1>Pokedex App</h1>
         <Button color="gradient">Button</Button>
       </main>
     </>

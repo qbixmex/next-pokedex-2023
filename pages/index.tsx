@@ -1,18 +1,15 @@
 import { FC } from 'react';
 import { Button } from '@nextui-org/react';
-import Head from 'next/head';
+import { Layout } from '../components/layouts';
 
 const HomePage: FC = () => {
   return (
-    <>
-      <Head>
-        <title>Pokedex App</title>
-      </Head>
+    <Layout title='Pokemons List'>
       <main>
-        <h1>Pokedex App</h1>
+        <h1>Pokemon List</h1>
         <Button color="gradient">Button</Button>
       </main>
-    </>
+    </Layout>
   );
 };
 

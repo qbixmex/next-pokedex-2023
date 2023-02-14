@@ -1,5 +1,7 @@
 import { FC, PropsWithChildren } from "react";
 import Head from "next/head";
+import { Navbar } from "../ui";
+import styles from './Layout.module.css';
 
 interface Props extends PropsWithChildren {
   title?: string;
@@ -17,9 +19,11 @@ export const Layout: FC<Props> = (props) => {
         <meta name="keyword" content={`${title}, pokemon, pokedex`} />
       </Head>
 
-      {/* TODO: <Navbar /> */}
+      <Navbar />
 
-      <main>{ children }</main>
+      <main className={styles.container}>
+        { children }
+      </main>
     </>
   );
 };

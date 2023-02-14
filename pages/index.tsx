@@ -1,16 +1,32 @@
 import { FC } from 'react';
-import { Button } from '@nextui-org/react';
+import { GetStaticProps } from 'next';
 import { Layout } from '../components/layouts';
 
-const HomePage: FC = () => {
+const HomePage: FC = (props) => {
+  console.log(props);
+
   return (
     <Layout title='Pokemons List'>
       <main>
-        <h1>Pokemon List</h1>
-        <Button color="gradient">Button</Button>
+        <ul>
+          <li>Pokemon</li>
+        </ul>
       </main>
     </Layout>
   );
 };
 
-export default HomePage;
+const getStaticProps: GetStaticProps = async (context) => {
+  console.log('Message from getStaticProps function :)');
+
+  return {
+    props: {
+      name: "Pikachu"
+    },
+  };
+};
+
+export {
+  getStaticProps,
+  HomePage as default
+};

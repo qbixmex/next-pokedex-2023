@@ -19,6 +19,16 @@ export interface Pokemon {
   weight:                   number;
 }
 
+export interface PokemonResult {
+  id: number;
+  name: string;
+  image: string;
+  front_default: string;
+  back_default: string;
+  front_shiny: string;
+  back_shiny: string;
+}
+
 export interface Ability {
   ability:   Species;
   is_hidden: boolean;

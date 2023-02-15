@@ -1,11 +1,11 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { Button, Card, Container, Grid, Text, Image } from '@nextui-org/react';
 import { Layout } from '../../components/layouts/Layout';
-import { Pokemon } from '../../interfaces';
+import { Pokemon, PokemonResult } from '../../interfaces';
 import { pokeApi } from '../../api';
 import { capitalize } from '../../utils';
 
-type Props = { pokemon: Pokemon };
+type Props = { pokemon: PokemonResult };
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
@@ -16,7 +16,7 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
           <Card isHoverable css={{ padding: '30px' }}>
             <Card.Body>
               <Card.Image
-                src={ pokemon.sprites.other?.dream_world.front_default ?? '/no-image.png' }
+                src={ pokemon.image ?? '/no-image.png' }
                 alt={ pokemon.name }
                 width="100%"
                 height={ 200 }
@@ -34,25 +34,25 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
               <Text size={ 30 }>Sprites:</Text>
               <Container direction='row' display='flex'>
                 <Image
-                  src={ pokemon.sprites.front_default }
+                  src={ pokemon.front_default }
                   alt={ pokemon.name }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
-                  src={ pokemon.sprites.front_shiny }
+                  src={ pokemon.front_shiny }
                   alt={ pokemon.name }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
-                  src={ pokemon.sprites.back_default }
+                  src={ pokemon.back_default }
                   alt={ pokemon.name }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
-                  src={ pokemon.sprites.back_shiny }
+                  src={ pokemon.back_shiny }
                   alt={ pokemon.name }
                   width={ 100 }
                   height={ 100 }
@@ -81,7 +81,15 @@ const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      pokemon: data,
+      pokemon: {
+        id: data.id,
+        name: data.name,
+        image: data.sprites.other?.dream_world.front_default ?? '/no-image.png',
+        front_default: data.sprites.front_default,
+        back_default: data.sprites.back_default,
+        front_shiny: data.sprites.front_shiny,
+        back_shiny: data.sprites.back_shiny,
+      },
     }
   };
 };

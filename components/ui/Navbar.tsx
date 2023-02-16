@@ -12,10 +12,10 @@ export const Navbar = () => {
       style={{ backgroundColor: theme?.colors.gray100.value }}
     >
       <Image
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
         alt="App Icon"
-        width={70}
-        height={70}
+        width={ 40 }
+        height={ 40 }
       />
 
       <NextLink href="/" passHref>

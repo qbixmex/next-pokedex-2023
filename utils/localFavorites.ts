@@ -1,5 +1,5 @@
 /**
- * Save pokemon "id" to Local Storage.
+ * Save pokemon "id" to "Local Storage"
  * @param id Pokemon ID
  */
 const toggleFavorite = (id: number): void => {
@@ -25,7 +25,16 @@ const existInPokemon = (id: number): boolean => {
   return favorites.includes(id);
 };
 
+/**
+ * Get pokemons from "Local Storage"
+ * @returns Pokemon IDs array or empty array
+ */
+const getPokemons = (): number[] => {
+  return JSON.parse(localStorage.getItem('favorites') ?? '[]');
+};
+
 export {
   toggleFavorite,
-  existInPokemon
+  existInPokemon,
+  getPokemons,
 };

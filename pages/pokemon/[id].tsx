@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { Button, Card, Container, Grid, Text, Image } from '@nextui-org/react';
 import { Layout } from '../../components/layouts/Layout';
@@ -8,6 +9,20 @@ import { capitalize } from '../../utils';
 type Props = { pokemon: PokemonResult };
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
+
+  const onToggleFavorite = () => {
+    console.log("ID:", pokemon.id);
+    localStorage.setItem('favorites', `${pokemon.id}`);
+  };
+
+  //! This will throw server error 500
+  //! Because window object does not exist on nodejs
+  //! so localStorage does not exist on node
+  // console.log(localStorage.getItem('favorites'));
+
+  useEffect(() => {
+    console.log("ID:", 'Secondary Effect', localStorage.getItem('favorites'));
+  }, []);
 
   return (
     <Layout title={`${ capitalize(pokemon.name) } Pokemon`}>
@@ -28,7 +43,13 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
           <Card>
             <Card.Header css={{ display: 'flex', justifyContent: 'space-between' }}>
               <Text h1 transform='capitalize'>{ pokemon.name }</Text>
-              <Button color="gradient" ghost>Save in Favorites</Button>
+
+              <Button
+                color="gradient"
+                ghost
+                onPress={ onToggleFavorite }
+              >Save in Favorites</Button>
+
             </Card.Header>
             <Card.Body>
               <Text size={ 30 }>Sprites:</Text>

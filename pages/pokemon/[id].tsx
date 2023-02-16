@@ -4,21 +4,15 @@ import { Button, Card, Container, Grid, Text, Image } from '@nextui-org/react';
 import { Layout } from '../../components/layouts/Layout';
 import { Pokemon, PokemonResult } from '../../interfaces';
 import { pokeApi } from '../../api';
-import { capitalize } from '../../utils';
+import { capitalize, localFavorites } from '../../utils';
 
 type Props = { pokemon: PokemonResult };
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
   const onToggleFavorite = () => {
-    console.log("ID:", pokemon.id);
-    localStorage.setItem('favorites', `${pokemon.id}`);
+    localFavorites.toggleFavorite(pokemon.id);
   };
-
-  //! This will throw server error 500
-  //! Because window object does not exist on nodejs
-  //! so localStorage does not exist on node
-  // console.log(localStorage.getItem('favorites'));
 
   useEffect(() => {
     console.log("ID:", 'Secondary Effect', localStorage.getItem('favorites'));

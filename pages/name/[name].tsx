@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
-import { Button, Card, Container, Grid, Text, Image } from '@nextui-org/react';
-import { Layout } from '../../components/layouts/Layout';
-import { Pokemon, PokemonResult } from '../../interfaces';
-import { pokeApi } from '../../api';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { Grid, Card, Text, Button, Container, Image } from '@nextui-org/react';
+import { Layout } from '../../components/layouts';
+import pokeApi from '../../api/pokeApi';
+import { PokemonListResponse, Pokemon, PokemonResult } from '../../interfaces';
 import { capitalize, localFavorites } from '../../utils';
 import confetti from 'canvas-confetti';
 
 type Props = { pokemon: PokemonResult };
 
-const PokemonPage: NextPage<Props> = ({ pokemon }) => {
+const PokemonByNamePage = ({ pokemon }: Props) => {
 
   const [isInFavorites, setIsInFavorites] = useState<boolean>(
     localFavorites.existInPokemon(pokemon.id)
@@ -96,17 +96,18 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 };
 
 const getStaticPaths: GetStaticPaths = async () => {
-  const pokemons151 = [...Array(151)].map((_, index) => `${index + 1}`);
+  const { data } = await pokeApi.get<PokemonListResponse>(`/pokemon?limit=151`);
+  const pokemonNames: string[] = data.results.map(pokemon => pokemon.name);
 
   return {
-    paths: pokemons151.map(id => ({ params: { id } })),
-    fallback: false, // false or 'blocking'
+    paths: pokemonNames.map(name => ({ params: { name }})),
+    fallback: false,
   };
 };
 
 const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { id } = params as { id: string };
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${ id }`);
+  const { name } = params as { name: string };
+  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${ name }`);
 
   return {
     props: {
@@ -119,12 +120,12 @@ const getStaticProps: GetStaticProps = async ({ params }) => {
         front_shiny: data.sprites.front_shiny,
         back_shiny: data.sprites.back_shiny,
       },
-    }
+    },
   };
 };
 
 export {
   getStaticPaths,
   getStaticProps,
-  PokemonPage as default,
+  PokemonByNamePage as default,
 };

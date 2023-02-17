@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { Button, Card, Container, Grid, Text, Image } from '@nextui-org/react';
 import { Layout } from '../../components/layouts/Layout';
-import { Pokemon, PokemonResult } from '../../interfaces';
-import { pokeApi } from '../../api';
-import { capitalize, localFavorites } from '../../utils';
+import { PokemonResult } from '../../interfaces';
+import { capitalize, localFavorites, getPokemonInfo } from '../../utils';
 import confetti from 'canvas-confetti';
 
 type Props = { pokemon: PokemonResult };
@@ -106,19 +105,10 @@ const getStaticPaths: GetStaticPaths = async () => {
 
 const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params as { id: string };
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${ id }`);
 
   return {
     props: {
-      pokemon: {
-        id: data.id,
-        name: data.name,
-        image: data.sprites.other?.dream_world.front_default ?? '/no-image.png',
-        front_default: data.sprites.front_default,
-        back_default: data.sprites.back_default,
-        front_shiny: data.sprites.front_shiny,
-        back_shiny: data.sprites.back_shiny,
-      },
+      pokemon: await getPokemonInfo(id),
     }
   };
 };

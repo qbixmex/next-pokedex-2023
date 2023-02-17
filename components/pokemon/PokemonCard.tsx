@@ -8,13 +8,13 @@ type Props = { data: SmallPokemon };
 export const PokemonCard: NextPage<Props> = ({ data: { id, name, img } }) => {
   const router = useRouter();
 
-  const handleClick = () => router.push(`/pokemon/${ id }`);
+  const handlePress = () => router.push(`/name/${ name }`);
 
   return (
     <Card
       isHoverable
       isPressable
-      onClick={ handleClick }
+      onPress={ handlePress }
       variant="bordered"
     >
       <Card.Body>

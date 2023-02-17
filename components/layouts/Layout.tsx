@@ -19,7 +19,7 @@ export const Layout: FC<Props> = (props) => {
         <meta name="author" content="Daniel González" />
         <meta name="description" content={`${title} information`} />
         <meta name="keyword" content={`${title}, pokemon, pokedex`} />
-        <meta name="og:title" content={`Pokemon ${title} Information`} />
+        <meta name="og:title" content={`${title} Information`} />
         <meta name="og:description" content={`This is the main page information of ${title}`} />
         <meta name="og:image" content={`${origin}/images/banner.png`} />
       </Head>

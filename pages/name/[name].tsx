@@ -12,7 +12,7 @@ type Props = { pokemon: PokemonResult };
 const PokemonByNamePage = ({ pokemon }: Props) => {
 
   const [isInFavorites, setIsInFavorites] = useState<boolean>(
-    localFavorites.existInPokemon(pokemon.id)
+    localFavorites.existInFavorites(pokemon.id)
   );
 
   const onToggleFavorite = () => {
@@ -38,7 +38,7 @@ const PokemonByNamePage = ({ pokemon }: Props) => {
             <Card.Body>
               <Card.Image
                 src={ pokemon.image ?? '/no-image.png' }
-                alt={ pokemon.name }
+                alt={ capitalize(pokemon.name) }
                 width="100%"
                 height={ 200 }
               />
@@ -64,25 +64,25 @@ const PokemonByNamePage = ({ pokemon }: Props) => {
               <Container direction='row' display='flex'>
                 <Image
                   src={ pokemon.front_default }
-                  alt={ pokemon.name }
-                  width={ 100 }
-                  height={ 100 }
-                />
-                <Image
-                  src={ pokemon.front_shiny }
-                  alt={ pokemon.name }
+                  alt={ `${capitalize(pokemon.name)} Front` }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
                   src={ pokemon.back_default }
-                  alt={ pokemon.name }
+                  alt={ `${capitalize(pokemon.name)} Back` }
+                  width={ 100 }
+                  height={ 100 }
+                />
+                <Image
+                  src={ pokemon.front_shiny }
+                  alt={ `${capitalize(pokemon.name)} Front Shiny` }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
                   src={ pokemon.back_shiny }
-                  alt={ pokemon.name }
+                  alt={ `${capitalize(pokemon.name)} Back Shiny` }
                   width={ 100 }
                   height={ 100 }
                 />

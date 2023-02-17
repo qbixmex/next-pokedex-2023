@@ -12,7 +12,7 @@ type Props = { pokemon: PokemonResult };
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
   const [isInFavorites, setIsInFavorites] = useState<boolean>(
-    localFavorites.existInPokemon(pokemon.id)
+    localFavorites.existInFavorites(pokemon.id)
   );
 
   const onToggleFavorite = () => {
@@ -38,7 +38,7 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
             <Card.Body>
               <Card.Image
                 src={ pokemon.image ?? '/no-image.png' }
-                alt={ pokemon.name }
+                alt={ capitalize(pokemon.name) }
                 width="100%"
                 height={ 200 }
               />
@@ -62,27 +62,27 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
             <Card.Body>
               <Text size={ 30 }>Sprites:</Text>
               <Container direction='row' display='flex'>
-                <Image
+              <Image
                   src={ pokemon.front_default }
-                  alt={ pokemon.name }
-                  width={ 100 }
-                  height={ 100 }
-                />
-                <Image
-                  src={ pokemon.front_shiny }
-                  alt={ pokemon.name }
+                  alt={ `${capitalize(pokemon.name)} Front` }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
                   src={ pokemon.back_default }
-                  alt={ pokemon.name }
+                  alt={ `${capitalize(pokemon.name)} Back` }
+                  width={ 100 }
+                  height={ 100 }
+                />
+                <Image
+                  src={ pokemon.front_shiny }
+                  alt={ `${capitalize(pokemon.name)} Front Shiny` }
                   width={ 100 }
                   height={ 100 }
                 />
                 <Image
                   src={ pokemon.back_shiny }
-                  alt={ pokemon.name }
+                  alt={ `${capitalize(pokemon.name)} Back Shiny` }
                   width={ 100 }
                   height={ 100 }
                 />
